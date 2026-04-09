@@ -1,0 +1,523 @@
+[tokens.layout]
+page-max = "72rem"
+reading-max = "46rem"
+
+[tokens.space]
+s1 = "0.35rem"
+s2 = "0.6rem"
+s3 = "0.9rem"
+s4 = "1.25rem"
+s5 = "1.75rem"
+s6 = "2.5rem"
+s7 = "3.5rem"
+s8 = "5rem"
+
+[tokens.surface]
+pad = "clamp(1.2rem, 1rem + 1vw, 2rem)"
+pad-sm = "clamp(1rem, 0.9rem + 0.6vw, 1.4rem)"
+pad-lg = "clamp(1.4rem, 1rem + 1.4vw, 2.6rem)"
+radius-lg = "1.75rem"
+radius-md = "1.2rem"
+radius-pill = "999px"
+
+[themes.light.color]
+accent = "#196b67"
+accent-deep = "#124d4a"
+accent-soft = "#e8f4f2"
+border = "rgba(31, 41, 55, 0.1)"
+code-background = "#17222d"
+code-label = "#f0b486"
+code-text = "#f4eee4"
+glow = "rgba(25, 107, 103, 0.08)"
+heading = "#1a2433"
+muted = "#5f6c7b"
+page-end = "#f3f5f6"
+page-start = "#fbfaf7"
+soft = "#7f8b97"
+surface = "rgba(255, 255, 255, 0.82)"
+text = "#1f2937"
+warm = "#f29c68"
+
+[themes.dark.color]
+accent = "#67c1b6"
+accent-deep = "#96e0d7"
+accent-soft = "#183a3a"
+border = "rgba(148, 163, 184, 0.18)"
+code-background = "#09111a"
+code-label = "#f9c99a"
+code-text = "#eff6ff"
+glow = "rgba(103, 193, 182, 0.16)"
+heading = "#f8fafc"
+muted = "#c0cad8"
+page-end = "#0f1724"
+page-start = "#111a26"
+soft = "#94a3b8"
+surface = "rgba(15, 23, 36, 0.84)"
+text = "#e5edf7"
+warm = "#f3b07e"
+
+[body]
+--page-max = "token(layout.page-max)"
+--reading-max = "token(layout.reading-max)"
+--space-1 = "token(space.s1)"
+--space-2 = "token(space.s2)"
+--space-3 = "token(space.s3)"
+--space-4 = "token(space.s4)"
+--space-5 = "token(space.s5)"
+--space-6 = "token(space.s6)"
+--space-7 = "token(space.s7)"
+--space-8 = "token(space.s8)"
+--surface-pad = "token(surface.pad)"
+--surface-pad-sm = "token(surface.pad-sm)"
+--surface-pad-lg = "token(surface.pad-lg)"
+--radius-lg = "token(surface.radius-lg)"
+--radius-md = "token(surface.radius-md)"
+--radius-pill = "token(surface.radius-pill)"
+--ink = "token(color.text)"
+--muted = "token(color.muted)"
+--soft = "token(color.soft)"
+--border = "token(color.border)"
+--accent = "token(color.accent)"
+--accent-deep = "token(color.accent-deep)"
+--accent-soft = "token(color.accent-soft)"
+--warm = "token(color.warm)"
+--surface-background = "token(color.surface)"
+margin = "0"
+min-height = "100vh"
+font-family = "'Avenir Next', 'Segoe UI Variable', 'Segoe UI', sans-serif"
+line-height = "1.5"
+background = "radial-gradient(circle at top, token(color.glow), transparent 30%), linear-gradient(180deg, token(color.page-start) 0%, token(color.page-end) 100%)"
+color = "var(--ink)"
+
+["#root"]
+min-height = "100vh"
+
+["div, a, button, input, p, h1, h2, h3"]
+box-sizing = "border-box"
+
+["a"]
+color = "inherit"
+text-decoration = "none"
+
+["button, input"]
+font = "inherit"
+
+["p, h1, h2, h3"]
+margin = "0"
+
+[".site-shell"]
+position = "relative"
+
+[".site-main"]
+display = "flex"
+flex-direction = "column"
+gap = "var(--space-6)"
+
+[".surface-card, .page-hero, .content-section, .site-footer"]
+border = "1px solid var(--border)"
+border-radius = "var(--radius-lg)"
+background = "var(--surface-background)"
+box-shadow = "0 18px 48px rgba(15, 23, 42, 0.06)"
+
+[".site-header"]
+position = "sticky"
+top = "1rem"
+z-index = "20"
+backdrop-filter = "blur(14px)"
+
+[".site-brand"]
+display = "flex"
+flex-direction = "column"
+
+[".wordmark"]
+font-family = "'Baskerville', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
+font-size = "1.9rem"
+font-weight = "700"
+letter-spacing = "-0.04em"
+
+[".brand-note"]
+font-size = "0.96rem"
+color = "var(--soft)"
+
+[".site-nav"]
+display = "flex"
+flex-wrap = "wrap"
+
+[".site-nav-link"]
+display = "inline-flex"
+align-items = "center"
+justify-content = "center"
+min-height = "2.7rem"
+padding = "0 0.95rem"
+border-radius = "var(--radius-pill)"
+font-size = "0.96rem"
+font-weight = "600"
+color = "#576273"
+transition = "background 160ms ease, color 160ms ease, transform 160ms ease"
+
+[".site-nav-link:hover"]
+background = "rgba(25, 107, 103, 0.08)"
+color = "var(--ink)"
+transform = "translateY(-1px)"
+
+[".site-nav-link.is-current"]
+background = "var(--ink)"
+color = "#f8fafc"
+
+[".page-hero"]
+background = "linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(243, 248, 247, 0.92) 100%)"
+
+[".eyebrow"]
+font-size = "0.83rem"
+font-weight = "700"
+letter-spacing = "0.14em"
+text-transform = "uppercase"
+color = "#b46a3b"
+
+[".page-title, .section-title, .card-title, .preview-title"]
+font-family = "'Baskerville', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
+letter-spacing = "-0.045em"
+color = "token(color.heading)"
+
+[".page-title"]
+font-size = "clamp(2.4rem, 5vw, 4.9rem)"
+line-height = "0.95"
+max-width = "11ch"
+
+[".section-title"]
+font-size = "clamp(1.85rem, 3vw, 2.8rem)"
+line-height = "1"
+max-width = "18ch"
+
+[".card-title"]
+font-size = "1.45rem"
+line-height = "1.08"
+
+[".hero-lede, .section-lede"]
+max-width = "var(--reading-max)"
+font-size = "1.06rem"
+line-height = "1.72"
+color = "var(--muted)"
+
+[".hero-support, .body-copy, .card-copy, .footer-copy, .field-copy, .preview-copy, .mini-note, .panel-intro"]
+font-size = "1rem"
+line-height = "1.72"
+color = "var(--muted)"
+
+[".button-row"]
+display = "flex"
+flex-wrap = "wrap"
+gap = "var(--space-3)"
+align-items = "center"
+
+[".button-link, .demo-button"]
+display = "inline-flex"
+align-items = "center"
+justify-content = "center"
+min-height = "3rem"
+padding = "0 1.2rem"
+border-radius = "var(--radius-pill)"
+font-weight = "700"
+transition = "transform 160ms ease, background 160ms ease, box-shadow 160ms ease, border-color 160ms ease"
+
+[".button-link:hover, .demo-button:hover"]
+transform = "translateY(-1px)"
+
+[".button-link-primary, .demo-button-primary"]
+background = "var(--accent)"
+color = "#f7fdfa"
+box-shadow = "0 14px 30px rgba(25, 107, 103, 0.18)"
+
+[".button-link-primary:hover, .demo-button-primary:hover"]
+background = "var(--accent-deep)"
+
+[".button-link-secondary, .demo-button-ghost"]
+background = "#ffffff"
+color = "var(--ink)"
+border = "1px solid var(--border)"
+
+[".button-link-secondary:hover, .demo-button-ghost:hover"]
+background = "#f7fafb"
+
+[".demo-button-secondary"]
+background = "var(--warm)"
+color = "#fff9f5"
+box-shadow = "0 14px 30px rgba(242, 156, 104, 0.2)"
+
+[".demo-button-secondary:hover"]
+background = "#e48d59"
+
+[".button-link-quiet"]
+min-height = "unset"
+padding = "0"
+border = "0"
+color = "var(--accent)"
+background = "transparent"
+
+[".hero-grid, .content-grid, .feature-grid, .step-grid, .docs-grid, .compare-grid, .playground-grid, .stat-grid"]
+display = "grid"
+gap = "var(--space-4)"
+align-items = "stretch"
+
+[".hero-grid"]
+grid-template-columns = "minmax(0, 1fr) minmax(22rem, 28rem)"
+
+[".home-hero"]
+gap = "var(--space-4)"
+
+[".hero-lead-column"]
+display = "flex"
+flex-direction = "column"
+gap = "var(--space-4)"
+
+[".home-hero .page-title"]
+font-size = "clamp(2.8rem, 4.8vw, 4.6rem)"
+max-width = "8ch"
+
+[".hero-content"]
+display = "flex"
+flex-direction = "column"
+gap = "var(--space-4)"
+
+[".content-grid"]
+grid-template-columns = "repeat(2, minmax(0, 1fr))"
+
+[".feature-grid, .docs-grid"]
+grid-template-columns = "repeat(3, minmax(0, 1fr))"
+
+[".step-grid, .compare-grid"]
+grid-template-columns = "repeat(2, minmax(0, 1fr))"
+
+[".playground-grid"]
+grid-template-columns = "minmax(0, 0.95fr) minmax(0, 1.05fr)"
+
+[".stat-grid"]
+grid-template-columns = "repeat(3, minmax(0, 1fr))"
+
+[".hero-copy, .hero-panel, .feature-card, .step-card, .doc-card, .compare-card, .note-card, .playground-card, .preview-card, .stat-card"]
+display = "flex"
+flex-direction = "column"
+gap = "var(--space-3)"
+
+[".hero-copy, .hero-panel"]
+justify-content = "space-between"
+
+[".feature-card, .step-card, .doc-card, .compare-card, .note-card"]
+justify-content = "flex-start"
+
+[".doc-card .inline-link"]
+margin-top = "auto"
+
+[".stat-card"]
+background = "linear-gradient(180deg, #f9fbfb 0%, #f0f5f4 100%)"
+border-color = "rgba(25, 107, 103, 0.12)"
+
+[".stat-value"]
+font-family = "'Baskerville', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
+font-size = "1.85rem"
+letter-spacing = "-0.04em"
+color = "#183142"
+
+[".stat-label"]
+font-size = "0.95rem"
+line-height = "1.55"
+color = "var(--soft)"
+
+[".section-intro"]
+display = "flex"
+flex-direction = "column"
+gap = "var(--space-3)"
+
+[".card-kicker"]
+font-size = "0.82rem"
+font-weight = "700"
+letter-spacing = "0.14em"
+text-transform = "uppercase"
+color = "#ba6b3d"
+
+[".step-index"]
+display = "inline-flex"
+width = "2.25rem"
+height = "2.25rem"
+align-items = "center"
+justify-content = "center"
+border-radius = "50%"
+background = "#edf3f4"
+color = "#23414c"
+font-size = "0.9rem"
+font-weight = "800"
+
+[".inline-link, .footer-link"]
+display = "inline-flex"
+align-items = "center"
+gap = "0.4rem"
+font-weight = "700"
+color = "var(--accent)"
+
+[".inline-link:hover, .footer-link:hover, .wordmark:hover"]
+text-decoration = "underline"
+
+[".code-card"]
+border-radius = "var(--radius-md)"
+background = "token(color.code-background)"
+box-shadow = "inset 0 1px 0 rgba(255, 255, 255, 0.04)"
+overflow = "hidden"
+
+[".code-label"]
+font-size = "0.78rem"
+font-weight = "700"
+letter-spacing = "0.14em"
+text-transform = "uppercase"
+color = "token(color.code-label)"
+
+[".code-line"]
+font-family = "'IBM Plex Mono', 'SFMono-Regular', 'Menlo', monospace"
+font-size = "0.91rem"
+line-height = "1.7"
+white-space = "pre-wrap"
+color = "token(color.code-text)"
+
+[".list-stack, .field-stack, .footer-copy-group, .footer-links"]
+display = "flex"
+flex-direction = "column"
+
+[".list-stack"]
+gap = "var(--space-3)"
+
+[".list-item"]
+padding-left = "1rem"
+position = "relative"
+color = "var(--muted)"
+line-height = "1.7"
+
+[".list-item::before"]
+content = "\"-\""
+position = "absolute"
+left = "0"
+color = "#ba6b3d"
+
+[".site-footer"]
+background = "rgba(255, 255, 255, 0.72)"
+
+[".footer-copy-group, .footer-links"]
+gap = "var(--space-2)"
+
+[".field-label"]
+font-size = "0.94rem"
+font-weight = "700"
+color = "#31404f"
+
+[".field-stack"]
+gap = "var(--space-2)"
+
+[".field-stack-inline"]
+flex-direction = "row"
+align-items = "center"
+gap = "var(--space-3)"
+
+[".text-field"]
+width = "100%"
+min-height = "3rem"
+padding = "0.85rem 1rem"
+border = "1px solid rgba(31, 41, 55, 0.14)"
+border-radius = "1rem"
+background = "#ffffff"
+color = "var(--ink)"
+transition = "border-color 160ms ease, box-shadow 160ms ease"
+
+[".text-field:focus"]
+outline = "none"
+border-color = "rgba(25, 107, 103, 0.5)"
+box-shadow = "0 0 0 4px rgba(25, 107, 103, 0.1)"
+
+[".checkbox-field"]
+width = "1.1rem"
+height = "1.1rem"
+accent-color = "var(--accent)"
+
+[".playground-card, .preview-card"]
+justify-content = "space-between"
+
+[".preview-card-warm"]
+background = "linear-gradient(180deg, #fcfbf8 0%, #f6f3ec 100%)"
+
+[".preview-card-night"]
+background = "linear-gradient(180deg, #233446 0%, #182532 100%)"
+border-color = "rgba(255, 255, 255, 0.06)"
+
+[".preview-card-night .preview-chip, .preview-card-night .preview-title, .preview-card-night .preview-copy, .preview-card-night .mini-note"]
+color = "#eff6ff"
+
+[".preview-chip"]
+display = "inline-flex"
+width = "fit-content"
+padding = "0.35rem 0.7rem"
+border-radius = "var(--radius-pill)"
+background = "rgba(31, 41, 55, 0.08)"
+font-size = "0.82rem"
+font-weight = "700"
+color = "#4d5d6e"
+
+[".preview-title"]
+font-size = "2rem"
+line-height = "1"
+
+[".mini-note"]
+font-size = "0.93rem"
+
+["@media (max-width: 1100px)".".hero-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 1100px)".".home-hero .page-title"]
+max-width = "10ch"
+
+["@media (max-width: 980px)".".feature-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 980px)".".docs-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 980px)".".playground-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 980px)".".compare-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 820px)".".site-header"]
+flex-direction = "column"
+align-items = "flex-start"
+justify-content = "flex-start"
+
+["@media (max-width: 820px)".".site-nav"]
+width = "100%"
+justify-content = "flex-start"
+
+["@media (max-width: 820px)".".content-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 820px)".".step-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 820px)".".stat-grid"]
+grid-template-columns = "1fr"
+
+["@media (max-width: 820px)".".site-footer"]
+flex-direction = "column"
+
+["@media (max-width: 640px)".".site-shell"]
+width = "min(var(--page-max), calc(100% - 1rem))"
+
+["@media (max-width: 640px)".".page-title"]
+max-width = "11ch"
+
+["@media (max-width: 640px)".".surface-card"]
+border-radius = "1.25rem"
+
+["@media (max-width: 640px)".".page-hero"]
+border-radius = "1.25rem"
+
+["@media (max-width: 640px)".".content-section"]
+border-radius = "1.25rem"
+
+["@media (max-width: 640px)".".site-footer"]
+border-radius = "1.25rem"

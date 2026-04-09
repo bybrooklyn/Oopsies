@@ -1,0 +1,21 @@
+[themes.light.color]
+background = "#f8fafc"
+text = "#1f2937"
+
+[themes.dark.color]
+background = "#111827"
+text = "#f8fafc"
+
+[body]
+margin = "0"
+font-family = "'Avenir Next', 'Segoe UI', sans-serif"
+background = "token(color.background)"
+color = "token(color.text)"
+
+["#root"]
+padding = "3rem 1rem"
+
+[".doc-hero, .doc-page"]
+display = "flex"
+flex-direction = "column"
+gap = "1rem"

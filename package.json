@@ -1,0 +1,58 @@
+{
+  "name": "oopsies",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "oopsies": "./bin/oopsies.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/plugin.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "LICENSE",
+    "README.md",
+    "templates"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf dist example/dist example/.oopsies .oopsies",
+    "dev": "npm run build:lib && concurrently -k -n lib,example -c cyan,green \"npm:dev:lib\" \"npm:dev:example\"",
+    "dev:lib": "tsup --watch",
+    "dev:example": "vite --config example/vite.config.ts",
+    "build": "npm run clean && npm run build:lib && npm run build:example",
+    "build:lib": "tsup",
+    "build:example": "vite build --config example/vite.config.ts",
+    "preview": "vite preview --config example/vite.config.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p example/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "concurrently": "^9.1.2",
+    "jsdom": "^25.0.1",
+    "tsup": "^8.3.5",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.9"
+  }
+}
