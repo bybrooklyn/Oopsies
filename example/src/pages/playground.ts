@@ -1,14 +1,14 @@
-import { component, field, form, input, renderApp, submit, text } from 'oopsies';
+import { component, field, form, input, render, submit, text, useState } from 'oopsies';
 import '../styling.toml';
 import { actionButton, actionLink, noteCard, pageHero, paragraph, sectionBlock, setPageTitle, sitePage, stack } from '../site';
 
 setPageTitle('Playground');
 
-const PlaygroundPage = component('PlaygroundPage', (_, ctx) => {
-  const name = ctx.state('builder');
-  const clicks = ctx.state(0);
-  const wantsUpdates = ctx.state(true);
-  const palette = ctx.state<'night' | 'warm'>('warm');
+const PlaygroundPage = component('PlaygroundPage', () => {
+  const name = useState('builder');
+  const clicks = useState(0);
+  const wantsUpdates = useState(true);
+  const palette = useState<'night' | 'warm'>('warm');
 
   const nameField = input('text', { className: 'text-field' })
     .name('name')
@@ -84,7 +84,7 @@ const PlaygroundPage = component('PlaygroundPage', (_, ctx) => {
         : 'You opted out, so the preview keeps things quiet and minimal.',
       'preview-copy',
     ),
-    text('This page is driven by ctx.state() signals inside a function component.').class('mini-note'),
+    text('This page is driven by useState() signals inside a plain function component.').class('mini-note'),
   ]);
 
   return sitePage('playground', hero, [
@@ -100,7 +100,7 @@ const PlaygroundPage = component('PlaygroundPage', (_, ctx) => {
       'The page intentionally uses the new pieces together so you can see what OOPSIES is trying to become.',
       [
         stack('docs-grid', [
-          noteCard('Function component state', 'ctx.state() gives function components a tiny, readable local state model.'),
+          noteCard('Function component state', 'useState() gives function components a tiny, readable local state model.'),
           noteCard('Signals and rerenders', 'Changing a signal reruns the mounted root automatically when the page reads that signal.'),
           noteCard('Native form flow', 'The form on this page uses regular browser GET submission, so it works without a client-side submission system.'),
         ]),
@@ -109,4 +109,4 @@ const PlaygroundPage = component('PlaygroundPage', (_, ctx) => {
   ]);
 });
 
-renderApp(() => PlaygroundPage({}));
+render(() => PlaygroundPage({}));

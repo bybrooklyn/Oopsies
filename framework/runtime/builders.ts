@@ -22,7 +22,38 @@ import { UIElement } from '../UIElement';
 import type { Child } from './component';
 import { addChildren, applyCommonOptions, type CommonBuilderOptions } from './element-helpers';
 
-export function box(props: CommonBuilderOptions & { children?: Child[] } = {}): Box {
+type BoxLikeOptions = CommonBuilderOptions & { children?: Child[] };
+
+function isChild(value: unknown): value is Child {
+  return value instanceof UIElement || value === null || value === undefined || value === false;
+}
+
+function isOptions(value: unknown): value is BoxLikeOptions {
+  if (!value || typeof value !== 'object' || value instanceof UIElement || Array.isArray(value)) {
+    return false;
+  }
+
+  return true;
+}
+
+function normalizeChildrenArgs(args: unknown[]): BoxLikeOptions {
+  if (args.length === 0) {
+    return {};
+  }
+
+  if (isOptions(args[0])) {
+    const [options, ...rest] = args;
+    return {
+      ...options,
+      children: [...(options.children ?? []), ...(rest as Child[])],
+    };
+  }
+
+  return { children: args as Child[] };
+}
+
+export function box(...args: unknown[]): Box {
+  const props = normalizeChildrenArgs(args);
   return addChildren(applyCommonOptions(new Box(), props), props.children) as Box;
 }
 
@@ -30,28 +61,52 @@ export function button(content: string, props: CommonBuilderOptions = {}): Butto
   return applyCommonOptions(new Button(content), props);
 }
 
-export function container(props: ContainerProps = {}): Container {
+export function container(...args: unknown[]): Container {
+  const props = normalizeChildrenArgs(args) as ContainerProps;
   return new Container(props);
 }
 
-export function field(props: FieldProps): Field {
-  return new Field(props);
+export function field(labelText: string, inputElement: Child, help?: Child): Field;
+export function field(props: FieldProps): Field;
+export function field(
+  labelOrProps: FieldProps | string,
+  inputElement?: Child,
+  help?: Child,
+): Field {
+  if (typeof labelOrProps === 'string') {
+    return new Field({
+      help,
+      input: inputElement ?? null,
+      label: labelOrProps,
+    });
+  }
+
+  return new Field(labelOrProps);
 }
 
 export function form(
-  props: CommonBuilderOptions & {
+  ...args: Array<
+    | (CommonBuilderOptions & {
+        action?: string;
+        children?: Child[];
+        method?: 'get' | 'post';
+      })
+    | Child
+  >
+): Form {
+  const props = normalizeChildrenArgs(args as unknown[]) as CommonBuilderOptions & {
     action?: string;
     children?: Child[];
     method?: 'get' | 'post';
-  } = {},
-): Form {
+  };
   const element = new Form(props.action ?? '', props.method ?? 'post');
   applyCommonOptions(element, props);
   addChildren(element, props.children);
   return element;
 }
 
-export function grid(props: GridProps = {}): Grid {
+export function grid(...args: unknown[]): Grid {
+  const props = normalizeChildrenArgs(args) as GridProps;
   return new Grid(props);
 }
 
@@ -79,29 +134,38 @@ export function option(labelText: string, value: string, props: CommonBuilderOpt
   return applyCommonOptions(new Option(labelText, value), props);
 }
 
-export function page(props: CommonBuilderOptions & { children?: Child[] } = {}): Page {
+export function page(...args: unknown[]): Page {
+  const props = normalizeChildrenArgs(args) as CommonBuilderOptions & { children?: Child[] };
   const element = new Page();
   applyCommonOptions(element, props);
   addChildren(element, props.children);
   return element;
 }
 
-export function row(props: RowProps = {}): Row {
+export function row(...args: unknown[]): Row {
+  const props = normalizeChildrenArgs(args) as RowProps;
   return new Row(props);
 }
 
 export function select(
-  props: CommonBuilderOptions & {
-    children?: Child[];
-  } = {},
+  ...args: Array<
+    | (CommonBuilderOptions & {
+        children?: Child[];
+      })
+    | Child
+  >
 ): Select {
+  const props = normalizeChildrenArgs(args as unknown[]) as CommonBuilderOptions & {
+    children?: Child[];
+  };
   const element = new Select();
   applyCommonOptions(element, props);
   addChildren(element, props.children);
   return element;
 }
 
-export function stack(props: StackProps = {}): Stack {
+export function stack(...args: unknown[]): Stack {
+  const props = normalizeChildrenArgs(args) as StackProps;
   return new Stack(props);
 }
 
@@ -109,8 +173,16 @@ export function submit(content: string, props: CommonBuilderOptions = {}): Submi
   return applyCommonOptions(new Submit(content), props);
 }
 
-export function surface(props: SurfaceProps = {}): Surface {
-  return new Surface(props);
+export function surface(...args: Array<SurfaceProps | Child>): Surface {
+  if (args.length === 0) {
+    return new Surface();
+  }
+
+  if (isOptions(args[0])) {
+    return new Surface(args[0] as SurfaceProps);
+  }
+
+  return new Surface({ children: args as Child[] });
 }
 
 export function text(content: string, props: CommonBuilderOptions = {}): Text {

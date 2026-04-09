@@ -1,4 +1,4 @@
-import { renderApp } from 'oopsies';
+import { render } from 'oopsies';
 import '../../styling.toml';
 import { actionLink, codeBlock, pageHero, sectionBlock, setPageTitle, sitePage, stack } from '../../site';
 
@@ -10,7 +10,7 @@ const hero = pageHero(
   [stack('button-row', [actionLink('Read the guide', '/docs/getting-started.html', 'secondary'), actionLink('Try the playground', '/playground.html', 'primary')])],
 );
 
-renderApp(() =>
+render(() =>
   sitePage('examples', hero, [
     sectionBlock(
       'Pattern one',
@@ -18,13 +18,10 @@ renderApp(() =>
       'When the page is static, function builders keep the structure compact and easy to read.',
       [
         codeBlock('Static page pattern', [
-          "import { heading, renderApp, stack, text } from 'oopsies';",
+          "import { heading, render, stack, text } from 'oopsies';",
           '',
-          'renderApp(() =>',
-          '  stack({',
-          "    children: [heading(1, 'Dashboard'), text('Everything is a chainable object.')],",
-          "    className: 'panel',",
-          '  }),',
+          'render(() =>',
+          "  stack(heading(1, 'Dashboard'), text('Everything is a chainable object.')).class('panel'),",
           ');',
         ]),
       ],
@@ -32,18 +29,16 @@ renderApp(() =>
     sectionBlock(
       'Pattern two',
       'A function component with state',
-      'For small interactive experiences, pair component() with ctx.state() and let renderApp rerun the tree when signals change.',
+      'For small interactive experiences, pair component() with useState() and let render() rerun the tree when signals change.',
       [
         codeBlock('Function component state', [
-          "const Counter = component('Counter', (_, ctx) => {",
-          '  const count = ctx.state(0);',
+          "const Counter = component('Counter', () => {",
+          '  const count = useState(0);',
           '',
-          '  return stack({',
-          '    children: [',
-          "      text(`Count: ${count()}`),",
-          "      button('Increment').onClick(() => count.update((value) => value + 1)),",
-          '    ],',
-          '  });',
+          '  return stack(',
+          "    text(`Count: ${count()}`),",
+          "    button('Increment').onClick(() => count.update((value) => value + 1)),",
+          '  );',
           '});',
         ]),
       ],
@@ -55,12 +50,12 @@ renderApp(() =>
       [
         stack('content-grid content-grid-wide', [
           codeBlock('Native form submission', [
-            "form({ method: 'get', action: '/docs/examples.html', children: [",
-            "  field({ label: 'Search', input: input('search').name('q') }),",
+            "form({ method: 'get', action: '/docs/examples.html' },",
+            "  field('Search', input('search').name('q')),",
             "  submit('Search'),",
-            '] })',
+            ')',
           ]),
-          codeBlock('Selector helpers', ['renderApp(() => App());', '', "new Box().render('#root');", '', "new Box().render('.custom-mount');"]),
+          codeBlock('Render helper', ['render(() => App());', '', "render(() => App(), '#root');"]),
         ]),
       ],
     ),

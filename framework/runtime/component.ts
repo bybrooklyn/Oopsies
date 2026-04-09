@@ -110,6 +110,8 @@ export type ComponentContext = {
   state<T>(initial: T): WritableSignal<T>;
 };
 
+type ComponentRender<Props> = (props: Props, context: ComponentContext) => UIElement;
+
 export type Component<Props> = ((props: Props) => UIElement) & {
   displayName: string;
 };
@@ -176,10 +178,48 @@ function createContext(): ComponentContext {
   };
 }
 
+function useContext(): ComponentContext {
+  return createContext();
+}
+
+export function useState<T>(initial: T): WritableSignal<T> {
+  return useContext().state(initial);
+}
+
+export function useSignal<T>(initial: T): WritableSignal<T> {
+  return useContext().signal(initial);
+}
+
+export function useComputed<T>(fn: () => T): ReadableSignal<T> {
+  return useContext().computed(fn);
+}
+
+export function useEffect(fn: () => void): void {
+  useContext().effect(fn);
+}
+
+export function useSlot(value: Child, fallback?: Child): Child {
+  return useContext().slot(value, fallback);
+}
+
+export function component<Props>(render: ComponentRender<Props>): Component<Props>;
+export function component<Props>(name: string, render: ComponentRender<Props>): Component<Props>;
 export function component<Props>(
-  name: string,
-  render: (props: Props, context: ComponentContext) => UIElement,
+  nameOrRender: string | ComponentRender<Props>,
+  maybeRender?: ComponentRender<Props>,
 ): Component<Props> {
+  const render = typeof nameOrRender === 'string' ? maybeRender : nameOrRender;
+  const name =
+    typeof nameOrRender === 'string'
+      ? nameOrRender
+      : nameOrRender.name && nameOrRender.name !== 'anonymous'
+        ? nameOrRender.name
+        : 'Component';
+
+  if (!render) {
+    throw new Error('OOPSIES component() requires a render function.');
+  }
+
   const wrapped = ((props: Props) => {
     const parent = currentFrame();
 
@@ -258,4 +298,8 @@ export function renderApp(factory: () => UIElement, target?: HTMLElement | strin
 
     root.instances.clear();
   };
+}
+
+export function render(tree: UIElement | (() => UIElement), target?: HTMLElement | string): Cleanup {
+  return renderApp(typeof tree === 'function' ? tree : () => tree, target);
 }

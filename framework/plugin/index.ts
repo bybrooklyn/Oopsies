@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Plugin, ViteDevServer } from 'vite';
 import { normalizePath } from 'vite';
-import { transformComponentSyntax } from './component-transform';
 import { tomlToCss } from './toml-to-css';
 
 const VIRTUAL_STYLE_PREFIX = 'virtual:oopsies-style:';
@@ -216,23 +215,6 @@ export function oopsiesPlugin(): Plugin {
       const source = fs.readFileSync(filePath, 'utf8');
 
       return tomlToCss(source);
-    },
-
-    transform(code, id) {
-      if (id.includes('/node_modules/') || !id.endsWith('.ts') || id.endsWith('.d.ts')) {
-        return null;
-      }
-
-      const transformed = transformComponentSyntax(code);
-
-      if (!transformed.changed) {
-        return null;
-      }
-
-      return {
-        code: transformed.code,
-        map: null,
-      };
     },
 
     buildStart() {

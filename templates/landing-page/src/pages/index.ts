@@ -1,7 +1,7 @@
-import { button, container, heading, link, renderApp, row, stack, surface, text } from 'oopsies';
+import { button, container, heading, link, render, row, stack, surface, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
+render(() =>
   container({
     children: [
       stack({

@@ -1,7 +1,7 @@
-import { container, heading, renderApp, stack, surface, text } from 'oopsies';
+import { container, heading, render, stack, surface, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
+render(() =>
   container({
     children: [
       heading(1, '__PROJECT_NAME__'),

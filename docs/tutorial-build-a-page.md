@@ -1,6 +1,6 @@
 # Build a Page
 
-This is the quickest way to get your hands on the framework.
+Let’s build the smallest useful thing possible.
 
 ## 1. Create a Page File
 
@@ -10,33 +10,30 @@ Add:
 example/src/pages/hello.ts
 ```
 
-Start with the builder-first path:
+Then write:
 
 ```ts
-import { button, heading, renderApp, stack, text } from 'oopsies';
+import { button, heading, render, stack, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
-  stack({
-    children: [
-      heading(1, 'Hello'),
-      text('This page was built in TypeScript.'),
-      button('Press me'),
-    ],
-    className: 'panel',
-  }),
+render(() =>
+  stack(
+    heading(1, 'Hello'),
+    text('This page was built in TypeScript.'),
+    button('Press me'),
+  ).class('panel'),
 );
 ```
 
-Then open:
+Now open:
 
 ```text
 /hello.html
 ```
 
-That file-to-page mapping is one of the nicest things about Oopsies. A page file becomes a page. No interpretive dance required.
+That direct file-to-page mapping is one of the nicest parts of Oopsies. You make a page file, and the framework does not make a big philosophical event out of it.
 
-## 2. Add Some TOML
+## 2. Add TOML Styles
 
 In `example/src/styling.toml`:
 
@@ -46,42 +43,28 @@ padding = "2rem"
 background = "token(color.surface)"
 ```
 
-Oopsies does not try to hide the CSS model from you. TOML is just a more structured authoring surface for selectors, variables, and declarations.
+Oopsies does not try to hide CSS ideas from you. TOML is just a cleaner authoring surface for selectors, tokens, and declarations.
 
 ## 3. Reuse UI with Components
-
-The stable reusable path is:
 
 ```ts
 import { component, heading, stack, text } from 'oopsies';
 
 const Hero = component('Hero', (props: { title: string }) =>
-  stack({
-    children: [heading(1, props.title), text('Reusable UI')],
-  }),
+  stack(
+    heading(1, props.title),
+    text('Reusable UI'),
+  ),
 );
 ```
 
-That gives you reusable UI without leaving plain TypeScript.
+## 4. Keep the Mental Model Small
 
-## 4. Try the Experimental Syntax
+The main ideas are:
 
-Oopsies also supports this in the plugin build path:
+- pages are files
+- UI is a tree of builders
+- components are plain functions
+- styling lives in TOML
 
-```ts
-component Hero(props: { title: string }) {
-  return stack({
-    children: [heading(1, props.title), text('Reusable UI')],
-  });
-}
-```
-
-It is real, but still early. Use it if you want to explore the direction of the framework. Use the builder-first path if you want the least friction today.
-
-## 5. What to Learn Next
-
-Once one page makes sense, the next helpful things are:
-
-- multi-page structure
-- local state with signals
-- forms that submit with normal browser POST/GET behavior
+That is enough to go surprisingly far.

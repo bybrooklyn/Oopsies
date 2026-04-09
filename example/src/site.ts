@@ -12,8 +12,7 @@ import {
   text,
   toggleTheme,
   type Child,
-  type ComponentContext,
-  type UIElement,
+  useState,
 } from 'oopsies';
 
 export type NavKey = 'home' | 'getting-started' | 'examples' | 'playground' | 'about';
@@ -32,11 +31,11 @@ const NAV_ITEMS: NavItem[] = [
   { key: 'about', label: 'About', href: '/about.html' },
 ];
 
-function compact(children: Child[]): UIElement[] {
-  return children.filter(Boolean) as UIElement[];
+function compact(children: Child[]): Child[] {
+  return children.filter(Boolean) as Child[];
 }
 
-export function stack(className: string, children: UIElement[] = [], gap = 'var(--space-4)') {
+export function stack(className: string, children: Child[] = [], gap = 'var(--space-4)') {
   return stackBuilder({ children, className, gap });
 }
 
@@ -149,8 +148,8 @@ export function bulletList(items: string[]) {
   });
 }
 
-const ThemeButton = component('ThemeButton', (_: Record<string, never>, ctx: ComponentContext) => {
-  const currentTheme = ctx.state(getTheme());
+const ThemeButton = component('ThemeButton', () => {
+  const currentTheme = useState(getTheme());
 
   return button(currentTheme() === 'dark' ? 'Light mode' : 'Dark mode', {
     className: 'button-link button-link-secondary theme-toggle',
@@ -228,7 +227,7 @@ const SiteFooter = component('SiteFooter', () => {
   });
 });
 
-export function sectionBlock(kicker: string, title: string, lead: string, children: UIElement[]) {
+export function sectionBlock(kicker: string, title: string, lead: string, children: Child[]) {
   return surface({
     body: stackBuilder({
       children: compact([
@@ -246,7 +245,7 @@ export function sectionBlock(kicker: string, title: string, lead: string, childr
   });
 }
 
-export function pageHero(title: string, lead: string, children: UIElement[]) {
+export function pageHero(title: string, lead: string, children: Child[]) {
   return surface({
     body: stackBuilder({
       children: [sectionHeading(1, title, 'page-title'), paragraph(lead, 'hero-lede'), ...children],
@@ -258,7 +257,7 @@ export function pageHero(title: string, lead: string, children: UIElement[]) {
   });
 }
 
-export function sitePage(current: NavKey, hero: UIElement, sections: UIElement[]) {
+export function sitePage(current: NavKey, hero: Child, sections: Child[]) {
   return container({
     children: [
       SiteHeader({ current }),

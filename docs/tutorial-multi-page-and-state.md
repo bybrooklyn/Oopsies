@@ -1,6 +1,6 @@
 # Multi-Page, Signals, and State
 
-Oopsies is still proudly multi-page-first. That is not a limitation so much as a choice: regular page navigation is often enough, and it is much easier to reason about.
+Oopsies is still proudly multi-page-first. That is a feature, not an apology.
 
 ## 1. Add Another Page
 
@@ -11,17 +11,15 @@ example/src/pages/contact.ts
 ```
 
 ```ts
-import { heading, link, renderApp, stack, text } from 'oopsies';
+import { heading, link, render, stack, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
-  stack({
-    children: [
-      heading(1, 'Contact'),
-      text('This is a second page.'),
-      link('Back Home', '/index.html'),
-    ],
-  }),
+render(() =>
+  stack(
+    heading(1, 'Contact'),
+    text('This is a second page.'),
+    link('Back Home', '/index.html'),
+  ),
 );
 ```
 
@@ -33,60 +31,46 @@ Nested folders also work:
 src/pages/docs/examples.ts -> /docs/examples.html
 ```
 
-## 2. Use Signals in a Function Component
+## 2. Add State with Hooks
 
 ```ts
-import { button, component, renderApp, stack, text } from 'oopsies';
+import { button, component, render, stack, text, useState } from 'oopsies';
 
-const Counter = component('Counter', (_, ctx) => {
-  const count = ctx.state(0);
+const Counter = component('Counter', () => {
+  const count = useState(0);
 
-  return stack({
-    children: [
-      text(`Count: ${count()}`),
-      button('Increment').onClick(() => count.update((value) => value + 1)),
-    ],
-  });
+  return stack(
+    text(`Count: ${count()}`),
+    button('Increment').onClick(() => count.update((value) => value + 1)),
+  );
 });
 
-renderApp(() => Counter({}));
+render(() => Counter({}));
 ```
 
-This is the core state story now:
+That is the whole state model:
 
 - local state uses signals
-- `ctx.state()` creates a writable signal
-- reading a signal makes the mounted root reactive to it
-
-So the state model stays small, but it is no longer manual in the old `reRender()` sense.
+- `useState()` gives you a writable signal
+- reading a signal makes the rendered tree reactive to it
 
 ## 3. Use Explicit Signals Too
-
-You can also use signals directly:
 
 ```ts
 const theme = signal('light');
 const label = computed(() => `Theme: ${theme()}`);
 ```
 
-Use `effect()` when you need reactive side effects.
+Use `useState()` inside components. Use raw `signal()` when you want shared or external state.
 
-## 4. Forms Still Submit Like Forms
-
-Oopsies currently keeps form handling close to the browser:
+## 4. Forms Still Behave Like Forms
 
 ```ts
-form({
-  method: 'get',
-  action: '/search.html',
-  children: [
-    field({
-      label: 'Search',
-      input: input('search').name('q'),
-    }),
-    submit('Search'),
-  ],
-});
+form(
+  { method: 'get', action: '/search.html' },
+  field('Search', input('search').name('q')),
+  submit('Search'),
+);
 ```
 
-That is deliberate. If you are building a simple site, the browser is already pretty good at being a browser.
+The browser is still invited to do browser things. That turns out to be pretty useful.

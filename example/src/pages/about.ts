@@ -1,4 +1,4 @@
-import { renderApp } from 'oopsies';
+import { render } from 'oopsies';
 import '../styling.toml';
 import {
   actionLink,
@@ -19,7 +19,7 @@ const hero = pageHero(
   [stack('button-row', [actionLink('Back home', '/index.html', 'secondary'), actionLink('Read the guide', '/docs/getting-started.html', 'primary')])],
 );
 
-renderApp(() =>
+render(() =>
   sitePage('about', hero, [
     sectionBlock(
       'The idea',

@@ -1,14 +1,12 @@
 # Getting Started
 
-If you are new to Oopsies, welcome. The whole point of this project is to make simple frontend work feel less annoying and more understandable.
+Welcome. Oopsies is for people who want frontend work to stop feeling like a punishment.
 
-The model is intentionally small:
+The model is intentionally simple:
 
-- TypeScript for page structure
+- TypeScript for structure
 - TOML for styling
-- Vite for building and serving
-
-That is it. No secret temple. No ritual sacrifice to the component gods.
+- Vite for build and dev server
 
 ## Run the Project
 
@@ -19,32 +17,36 @@ npm install
 npm run dev
 ```
 
-That builds the package once, starts the package watcher, and serves the example site from `example/`.
+That builds the package once, watches it, and serves the example site from `example/`.
 
-## The Default Authoring Style
+## The Recommended Style
 
-The safest path today is plain TypeScript with builder functions:
+Oopsies now has one main authoring path:
 
 ```ts
-import { heading, renderApp, stack, text } from 'oopsies';
+import { heading, render, stack, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
-  stack({
-    children: [heading(1, 'Hello'), text('This page is built with Oopsies')],
-  }),
+render(() =>
+  stack(
+    heading(1, 'Hello'),
+    text('This page is built with Oopsies'),
+  ),
 );
 ```
 
-Each file in `src/pages/` becomes an HTML page. For example:
+That is the important shift: no more juggling multiple public syntaxes. Builder-first TypeScript is the path.
+
+## Pages
+
+Every file in `src/pages/` becomes a page.
 
 ```text
 src/pages/about.ts -> /about.html
+src/pages/docs/examples.ts -> /docs/examples.html
 ```
 
-Nested folders work too.
-
-## Themes and Styling
+## Themes
 
 Oopsies uses token-first TOML:
 
@@ -59,31 +61,26 @@ text = "#f8fafc"
 color = "token(color.text)"
 ```
 
-The plugin compiles tokens into CSS variables and applies light/dark themes automatically. If a user picks a theme, that choice is remembered across page loads.
+The plugin turns tokens into CSS variables and applies light/dark themes automatically.
 
-## Runtime Features
+## State
 
-Current features include:
-
-- layout builders like `stack`, `row`, `grid`, `container`, and `surface`
-- forms with `form`, `field`, `input`, `textarea`, `select`, and `submit`
-- signals with `signal`, `computed`, and `effect`
-- local component state with `ctx.state()`
-
-## Experimental Syntax
-
-Oopsies also supports custom component syntax in the build pipeline:
+Use plain function components plus hooks:
 
 ```ts
-component Hero(props: HeroProps) {
-  const count = state(0);
-  return stack({ children: [text(props.title), text(`Count: ${count()}`)] });
-}
+const Counter = component('Counter', () => {
+  const count = useState(0);
+
+  return stack(
+    text(`Count: ${count()}`),
+    button('Increment').onClick(() => count.update((value) => value + 1)),
+  );
+});
 ```
 
-This works during Oopsies builds, but plain `tsc` and editor tooling do not fully understand it yet. For now, builder-first TypeScript is still the most dependable path.
+If you already feel a small sense of relief reading that, good. That is the point.
 
-## Useful Commands
+## Commands You Will Use
 
 ```bash
 npm run build
@@ -91,7 +88,7 @@ npm run typecheck
 npm test
 ```
 
-Next up:
+Next:
 
 1. [Build a Page](./tutorial-build-a-page.md)
 2. [Multi-Page, Signals, and State](./tutorial-multi-page-and-state.md)

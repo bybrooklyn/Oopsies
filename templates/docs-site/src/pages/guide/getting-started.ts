@@ -1,11 +1,11 @@
-import { container, heading, paragraph, renderApp, stack } from 'oopsies';
+import { container, heading, render, stack, text } from 'oopsies';
 import '../../styling.toml';
 
-renderApp(() =>
+render(() =>
   container({
     children: [
       stack({
-        children: [heading(1, 'Getting Started'), paragraph('Add more docs pages under src/pages/guide/.')],
+        children: [heading(1, 'Getting Started'), text('Add more docs pages under src/pages/guide/.')],
         className: 'doc-page',
       }),
     ],

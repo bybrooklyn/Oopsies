@@ -1,4 +1,4 @@
-import { renderApp } from 'oopsies';
+import { render } from 'oopsies';
 import '../../styling.toml';
 import { actionLink, codeBlock, noteCard, pageHero, sectionBlock, setPageTitle, sitePage, stack } from '../../site';
 
@@ -15,7 +15,7 @@ const hero = pageHero(
   ],
 );
 
-renderApp(() =>
+render(() =>
   sitePage('getting-started', hero, [
     sectionBlock(
       'Step one',
@@ -34,16 +34,17 @@ renderApp(() =>
     sectionBlock(
       'Step two',
       'Create a page and render a small tree',
-      'Every file under src/pages becomes a page. The page itself can be a simple renderApp call that returns a tree of builders and components.',
+      'Every file under src/pages becomes a page. The page itself can be a simple render() call that returns a tree of builders and components.',
       [
         codeBlock('example/src/pages/hello.ts', [
-          "import { heading, renderApp, stack, text } from 'oopsies';",
+          "import { heading, render, stack, text } from 'oopsies';",
           "import '../styling.toml';",
           '',
-          'renderApp(() =>',
-          '  stack({',
-          "    children: [heading(1, 'Hello'), text('This page is built in TypeScript.')],",
-          '  }),',
+          'render(() =>',
+          '  stack(',
+          "    heading(1, 'Hello'),",
+          "    text('This page is built in TypeScript.'),",
+          '  ),',
           ');',
         ]),
       ],
@@ -78,7 +79,7 @@ renderApp(() =>
       [
         stack('docs-grid', [
           noteCard('Components', 'Use the component() helper for reusable function components with named slots.'),
-          noteCard('Signals', 'Use signal(), computed(), effect(), or ctx.state() inside function components.'),
+          noteCard('Signals', 'Use signal(), computed(), effect(), or useState() inside function components.'),
           noteCard('Nested pages', 'Files like src/pages/docs/examples.ts become /docs/examples.html automatically.'),
         ]),
       ],

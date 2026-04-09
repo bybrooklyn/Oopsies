@@ -1,4 +1,4 @@
-import { renderApp } from 'oopsies';
+import { render } from 'oopsies';
 import '../styling.toml';
 import {
   actionLink,
@@ -40,13 +40,14 @@ const hero = stack('page-hero home-hero', [
     stack('hero-panel', [
       paragraph('The whole pitch fits in a small page module.', 'panel-intro'),
       codeBlock('example/src/pages/index.ts', [
-        "import { heading, renderApp, stack, text } from 'oopsies';",
+        "import { heading, render, stack, text } from 'oopsies';",
         "import '../styling.toml';",
         '',
-        'renderApp(() =>',
-        '  stack({',
-        "    children: [heading(1, 'Hello OOPSIES'), text('No handwritten HTML required.')],",
-        '  }),',
+        'render(() =>',
+        '  stack(',
+        "    heading(1, 'Hello Oopsies'),",
+        "    text('No handwritten HTML required.'),",
+        '  ),',
         ');',
       ]),
       paragraph(
@@ -60,7 +61,7 @@ const hero = stack('page-hero home-hero', [
   .padding('var(--surface-pad-lg)')
   .flex('column', 'var(--space-5)');
 
-renderApp(() =>
+render(() =>
   sitePage('home', hero, [
     sectionBlock(
       'Why it clicks',

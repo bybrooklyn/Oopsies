@@ -1,13 +1,13 @@
-import { container, heading, link, paragraph, renderApp, stack } from 'oopsies';
+import { container, heading, link, render, stack, text } from 'oopsies';
 import '../styling.toml';
 
-renderApp(() =>
+render(() =>
   container({
     children: [
       stack({
         children: [
           heading(1, '__PROJECT_NAME__'),
-          paragraph('A docs-site starter with simple navigation and multi-page structure.'),
+          text('A docs-site starter with simple navigation and multi-page structure.'),
           link('Read the guide', '/guide/getting-started.html'),
         ],
         className: 'doc-hero',

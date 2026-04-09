@@ -10,5 +10,5 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: 'es2020',
-  external: ['vite', '@iarna/toml', 'typescript'],
+  external: ['vite', '@iarna/toml'],
 });
