@@ -1,6 +1,6 @@
-# Tutorial: Build a Page
+# Build a Page
 
-This is the fastest way to feel what OOPSIES is for.
+This is the quickest way to get your hands on the framework.
 
 ## 1. Create a Page File
 
@@ -34,7 +34,9 @@ Then open:
 /hello.html
 ```
 
-## 2. Add TOML Styles
+That file-to-page mapping is one of the nicest things about Oopsies. A page file becomes a page. No interpretive dance required.
+
+## 2. Add Some TOML
 
 In `example/src/styling.toml`:
 
@@ -44,11 +46,11 @@ padding = "2rem"
 background = "token(color.surface)"
 ```
 
-OOPSIES keeps the CSS model visible. TOML is a structured layer over selectors and declarations, not a replacement for CSS concepts.
+Oopsies does not try to hide the CSS model from you. TOML is just a more structured authoring surface for selectors, variables, and declarations.
 
 ## 3. Reuse UI with Components
 
-The stable path today is the runtime helper:
+The stable reusable path is:
 
 ```ts
 import { component, heading, stack, text } from 'oopsies';
@@ -60,9 +62,11 @@ const Hero = component('Hero', (props: { title: string }) =>
 );
 ```
 
+That gives you reusable UI without leaving plain TypeScript.
+
 ## 4. Try the Experimental Syntax
 
-OOPSIES now also supports this in the plugin build path:
+Oopsies also supports this in the plugin build path:
 
 ```ts
 component Hero(props: { title: string }) {
@@ -72,12 +76,12 @@ component Hero(props: { title: string }) {
 }
 ```
 
-That syntax is real, but still experimental. Use it when you are working inside the OOPSIES build pipeline and are comfortable with temporary editor/tooling gaps.
+It is real, but still early. Use it if you want to explore the direction of the framework. Use the builder-first path if you want the least friction today.
 
 ## 5. What to Learn Next
 
-Once a page makes sense, the next useful topics are:
+Once one page makes sense, the next helpful things are:
 
 - multi-page structure
 - local state with signals
-- forms that submit through normal browser POST/GET flows
+- forms that submit with normal browser POST/GET behavior

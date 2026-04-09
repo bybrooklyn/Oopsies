@@ -1,28 +1,34 @@
-# OOPSIES
+# Oopsies
 
-OOPSIES is a TypeScript-first UI framework for building simple multi-page sites without hand-writing HTML or CSS.
+Oopsies is a TypeScript-first UI framework for people who would rather not spend their afternoon juggling HTML, CSS, and framework ceremony just to ship a small site.
 
-You build structure in TypeScript and keep styling in TOML. The framework handles page discovery, theme bootstrapping, and TOML-to-CSS compilation through Vite.
+The idea is simple:
 
-## What Exists Today
+- write structure in TypeScript
+- write styling in TOML
+- let the build tooling do the glue work
 
-OOPSIES now includes:
+It is especially aimed at backend-leaning developers, OOP-minded developers, and anyone who has ever looked at modern frontend tooling and quietly muttered, "absolutely not."
 
-- class-based elements like `Page`, `Box`, `Text`, `Heading`, `Link`, and `Input`
+## What Oopsies Has Right Now
+
+Today, Oopsies includes:
+
+- element classes like `Page`, `Box`, `Text`, `Heading`, `Link`, and `Input`
 - builder functions like `stack`, `row`, `grid`, `container`, `surface`, `form`, and `field`
-- function components via `component(...)`
-- a small reactive runtime with `signal`, `computed`, `effect`, and `ctx.state()`
-- token-first TOML themes with built-in light/dark mode and persisted theme choice
-- MPA page discovery from `src/pages/**`
-- a CLI starter flow through `oopsies create`
+- reusable function components with `component(...)`
+- signals with `signal`, `computed`, `effect`, and `ctx.state()`
+- token-first TOML themes with built-in light/dark mode and persisted preference
+- multi-page output from `src/pages/**`
+- starter scaffolds through `oopsies create`
 
-## Repository Layout
+## Project Layout
 
-- `framework/` contains the runtime, builders, elements, signals, theme helpers, and Vite plugin
-- `example/` is the dogfood site built with OOPSIES
+- `framework/` contains the runtime, builders, elements, signals, themes, and plugin
+- `example/` contains the dogfood site built in Oopsies
 - `templates/` contains CLI starter projects
 - `tests/` contains Vitest coverage
-- `bin/oopsies.js` is the CLI entrypoint
+- `bin/oopsies.js` contains the CLI entrypoint
 
 ## Commands
 
@@ -34,9 +40,9 @@ npm run typecheck
 npm test
 ```
 
-## Current Authoring Paths
+## Best Current Authoring Path
 
-The safest path today is plain TypeScript with builder functions:
+The most stable path today is builder-first TypeScript:
 
 ```ts
 import { heading, renderApp, stack, text } from 'oopsies';
@@ -44,26 +50,23 @@ import '../styling.toml';
 
 renderApp(() =>
   stack({
-    children: [heading(1, 'Hello'), text('Built with OOPSIES')],
+    children: [heading(1, 'Hello'), text('Built with Oopsies')],
   }),
 );
 ```
 
-OOPSIES also now supports experimental custom component syntax in the Vite/plugin build path:
+There is also experimental custom component syntax:
 
 ```ts
 component Hero(props: HeroProps) {
   const count = state(0);
-
-  return stack({
-    children: [text(props.title), text(`Count: ${count()}`)],
-  });
+  return stack({ children: [text(props.title), text(`Count: ${count()}`)] });
 }
 ```
 
-That syntax is build-supported, but editor and plain `tsc` support are still behind it. For now, builder-first TypeScript is the most stable path.
+That build path works, but editor support is still catching up. So for now, the framework is being honest with you: the fancy syntax is promising, but the plain TypeScript path is still the dependable one.
 
-## Documentation
+## Read Next
 
 - [Getting Started](./docs/getting-started.md)
 - [Build a Page](./docs/tutorial-build-a-page.md)

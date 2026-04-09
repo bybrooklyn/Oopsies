@@ -1,6 +1,6 @@
-# Tutorial: Multi-Page, Signals, and State
+# Multi-Page, Signals, and State
 
-OOPSIES is still MPA-first. That means routing stays simple: one page file becomes one page.
+Oopsies is still proudly multi-page-first. That is not a limitation so much as a choice: regular page navigation is often enough, and it is much easier to reason about.
 
 ## 1. Add Another Page
 
@@ -27,7 +27,7 @@ renderApp(() =>
 
 That becomes `/contact.html`.
 
-Nested pages also work:
+Nested folders also work:
 
 ```text
 src/pages/docs/examples.ts -> /docs/examples.html
@@ -52,13 +52,15 @@ const Counter = component('Counter', (_, ctx) => {
 renderApp(() => Counter({}));
 ```
 
-That is the main state model now:
+This is the core state story now:
 
 - local state uses signals
-- `ctx.state()` gives a writable signal
-- changing a signal reruns the mounted root when that signal is read
+- `ctx.state()` creates a writable signal
+- reading a signal makes the mounted root reactive to it
 
-## 3. Use Explicit Signals Outside `ctx`
+So the state model stays small, but it is no longer manual in the old `reRender()` sense.
+
+## 3. Use Explicit Signals Too
 
 You can also use signals directly:
 
@@ -67,11 +69,11 @@ const theme = signal('light');
 const label = computed(() => `Theme: ${theme()}`);
 ```
 
-Use `effect()` when you need a side effect tied to reactive reads.
+Use `effect()` when you need reactive side effects.
 
-## 4. Native Form Submission
+## 4. Forms Still Submit Like Forms
 
-OOPSIES currently prefers normal browser form behavior:
+Oopsies currently keeps form handling close to the browser:
 
 ```ts
 form({
@@ -87,4 +89,4 @@ form({
 });
 ```
 
-That keeps simple sites simple.
+That is deliberate. If you are building a simple site, the browser is already pretty good at being a browser.

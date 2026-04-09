@@ -1,14 +1,16 @@
 # Getting Started
 
-OOPSIES is aimed at people who want frontend work to feel smaller and more readable.
+If you are new to Oopsies, welcome. The whole point of this project is to make simple frontend work feel less annoying and more understandable.
 
-The basic model is:
+The model is intentionally small:
 
-- write page structure in TypeScript
-- write styling in TOML
-- let the plugin turn page files into a multi-page site
+- TypeScript for page structure
+- TOML for styling
+- Vite for building and serving
 
-## Install and Run
+That is it. No secret temple. No ritual sacrifice to the component gods.
+
+## Run the Project
 
 From the repository root:
 
@@ -17,11 +19,11 @@ npm install
 npm run dev
 ```
 
-That builds the library once, watches the package, and serves the example site in `example/`.
+That builds the package once, starts the package watcher, and serves the example site from `example/`.
 
-## The Main Authoring Style
+## The Default Authoring Style
 
-The default path today is builder-first TypeScript:
+The safest path today is plain TypeScript with builder functions:
 
 ```ts
 import { heading, renderApp, stack, text } from 'oopsies';
@@ -29,16 +31,22 @@ import '../styling.toml';
 
 renderApp(() =>
   stack({
-    children: [heading(1, 'Hello'), text('This page is built with OOPSIES')],
+    children: [heading(1, 'Hello'), text('This page is built with Oopsies')],
   }),
 );
 ```
 
-Every file under `src/pages/` becomes a page. A file like `src/pages/about.ts` becomes `/about.html`.
+Each file in `src/pages/` becomes an HTML page. For example:
+
+```text
+src/pages/about.ts -> /about.html
+```
+
+Nested folders work too.
 
 ## Themes and Styling
 
-OOPSIES supports token-first TOML:
+Oopsies uses token-first TOML:
 
 ```toml
 [tokens.color]
@@ -51,20 +59,20 @@ text = "#f8fafc"
 color = "token(color.text)"
 ```
 
-The plugin compiles tokens into CSS variables and applies light/dark themes automatically. If the user picks a theme, that choice is persisted across page loads.
+The plugin compiles tokens into CSS variables and applies light/dark themes automatically. If a user picks a theme, that choice is remembered across page loads.
 
 ## Runtime Features
 
-Current framework features include:
+Current features include:
 
-- builders like `stack`, `row`, `grid`, `container`, and `surface`
+- layout builders like `stack`, `row`, `grid`, `container`, and `surface`
 - forms with `form`, `field`, `input`, `textarea`, `select`, and `submit`
 - signals with `signal`, `computed`, and `effect`
-- local function-component state through `ctx.state()`
+- local component state with `ctx.state()`
 
 ## Experimental Syntax
 
-OOPSIES also supports custom component syntax in the Vite/plugin build path:
+Oopsies also supports custom component syntax in the build pipeline:
 
 ```ts
 component Hero(props: HeroProps) {
@@ -73,7 +81,7 @@ component Hero(props: HeroProps) {
 }
 ```
 
-This works during OOPSIES builds, but plain `tsc` and editor tooling do not fully understand it yet. Builder-first TypeScript is still the safest path today.
+This works during Oopsies builds, but plain `tsc` and editor tooling do not fully understand it yet. For now, builder-first TypeScript is still the most dependable path.
 
 ## Useful Commands
 
@@ -83,7 +91,7 @@ npm run typecheck
 npm test
 ```
 
-Next:
+Next up:
 
 1. [Build a Page](./tutorial-build-a-page.md)
 2. [Multi-Page, Signals, and State](./tutorial-multi-page-and-state.md)

@@ -1,6 +1,6 @@
 # Examples
 
-This page focuses on the current OOPSIES surface, not the older prototype API.
+This page is a small pattern shelf for the current Oopsies surface.
 
 ## Builder-First Page
 
@@ -96,4 +96,4 @@ component Hero(props: { title: string }) {
 }
 ```
 
-This syntax is supported by the OOPSIES plugin build path, but it is still ahead of plain editor and `tsc` support.
+This works in the Oopsies build path today, but editor and `tsc` support still trail it. So yes, it is a little rebellious. That is part of the charm, but also part of the warning label.
