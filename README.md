@@ -1,6 +1,7 @@
 # Oopsies
 
-Oopsies is a TypeScript-first UI framework for building simple multi-page sites without hand-writing HTML or CSS.
+"Object Oriented Programmed Into EMCA Script!" Also known as Oopsies! is a Typescript/TOML web framework designed for backend devs to easily create frontends without a line of HTML or CSS.
+> This WAS implemented with "AI Agents" and is still in a very rough version but is seeming promising
 
 You write structure in TypeScript, styling in TOML, and let the framework handle the page plumbing. The goal is not to be clever. The goal is to make small frontend work feel humane again.
 
