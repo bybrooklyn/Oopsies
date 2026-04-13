@@ -83,3 +83,60 @@ describe('render and inputs', () => {
     expect(document.querySelector('#root')?.textContent).toContain('Count: 1');
   });
 });
+
+describe('UIElement accessibility and event helpers', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+  });
+
+  it('tabIndex, ariaLabel, and hidden set the correct DOM properties', () => {
+    const btn = button('Click me')
+      .tabIndex(3)
+      .ariaLabel('Close dialog')
+      .hidden();
+
+    render(btn, '#root');
+
+    const el = document.querySelector<HTMLButtonElement>('#root button');
+    expect(el?.tabIndex).toBe(3);
+    expect(el?.getAttribute('aria-label')).toBe('Close dialog');
+    expect(el?.hidden).toBe(true);
+  });
+
+  it('onFocus and onBlur fire on the correct events', () => {
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+
+    const el = input('text').onFocus(onFocus).onBlur(onBlur);
+    render(el, '#root');
+
+    const rendered = document.querySelector<HTMLInputElement>('#root input');
+    rendered?.dispatchEvent(new FocusEvent('focus'));
+    rendered?.dispatchEvent(new FocusEvent('blur'));
+
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onBlur).toHaveBeenCalledTimes(1);
+  });
+
+  it('onKeyUp fires on keyup events', () => {
+    const onKeyUp = vi.fn();
+    const el = input('text').onKeyUp(onKeyUp);
+    render(el, '#root');
+
+    const rendered = document.querySelector<HTMLInputElement>('#root input');
+    rendered?.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+
+    expect(onKeyUp).toHaveBeenCalledTimes(1);
+  });
+
+  it('generic on() handler attaches any DOM event listener', () => {
+    const handler = vi.fn();
+    const el = button('Test').on('dblclick', handler);
+    render(el, '#root');
+
+    const rendered = document.querySelector<HTMLButtonElement>('#root button');
+    rendered?.dispatchEvent(new MouseEvent('dblclick'));
+
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+});

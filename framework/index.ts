@@ -11,7 +11,7 @@ export { Submit } from './elements/Submit';
 export { Surface, type SurfaceProps } from './elements/Surface';
 export { Textarea } from './elements/Textarea';
 export { component, render, type Child, type Component, type ComponentContext, useComputed, useEffect, useSignal, useSlot, useState } from './runtime/component';
-export { computed, effect, signal, untrack, type ReadableSignal, type WritableSignal } from './runtime/signals';
+export { computed, effect, signal, untrack, batch, type ReadableSignal, type WritableSignal } from './runtime/signals';
 export { clearThemePreference, getPreferredTheme, getStoredTheme, getTheme, setTheme, toggleTheme } from './runtime/theme';
 export {
   box,

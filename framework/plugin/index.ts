@@ -7,7 +7,7 @@ import { tomlToCss } from './toml-to-css';
 const VIRTUAL_STYLE_PREFIX = 'virtual:oopsies-style:';
 const VIRTUAL_STYLE_SUFFIX = '/style.css';
 const GENERATED_HTML_DIR = '.oopsies';
-const SHELL_TITLE = 'OOPSIES! App';
+const DEFAULT_SHELL_TITLE = 'OOPSIES! App';
 const THEME_BOOTSTRAP = String.raw`(() => {
   const key = 'oopsies-theme';
   const stored = window.localStorage.getItem(key);
@@ -26,6 +26,11 @@ type PageEntry = {
   outputPath: string;
   htmlFile: string;
   scriptPath: string;
+};
+
+export type OopsiesPluginOptions = {
+  /** Custom title for generated HTML pages. Defaults to "OOPSIES! App". */
+  title?: string;
 };
 
 function getHeadMarkup(root: string): string {
@@ -74,14 +79,14 @@ function isPageEntry(filePath: string, root: string): boolean {
   );
 }
 
-function buildHtmlShell(scriptPath: string, headMarkup = ''): string {
+function buildHtmlShell(scriptPath: string, headMarkup = '', title = DEFAULT_SHELL_TITLE): string {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ${headMarkup}
-    <title>${SHELL_TITLE}</title>
+    <title>${title}</title>
   </head>
   <body>
     <div id="root"></div>
@@ -107,7 +112,7 @@ function scanPages(root: string): PageEntry[] {
   });
 }
 
-function writeGeneratedHtml(entries: PageEntry[], headMarkup: string): void {
+function writeGeneratedHtml(entries: PageEntry[], headMarkup: string, title = DEFAULT_SHELL_TITLE): void {
   const outDir = entries[0] ? path.dirname(entries[0].htmlFile) : null;
 
   if (!outDir) {
@@ -122,7 +127,7 @@ function writeGeneratedHtml(entries: PageEntry[], headMarkup: string): void {
     }
 
     fs.mkdirSync(path.dirname(entry.htmlFile), { recursive: true });
-    fs.writeFileSync(entry.htmlFile, buildHtmlShell(entry.scriptPath, headMarkup), 'utf8');
+    fs.writeFileSync(entry.htmlFile, buildHtmlShell(entry.scriptPath, headMarkup, title), 'utf8');
   }
 }
 
@@ -142,7 +147,8 @@ function mergeInputs(indexHtml: string, entries: PageEntry[]): Record<string, st
   return inputs;
 }
 
-export function oopsiesPlugin(): Plugin {
+export function oopsiesPlugin(options: OopsiesPluginOptions = {}): Plugin {
+  const shellTitle = options.title ?? DEFAULT_SHELL_TITLE;
   let root = process.cwd();
   let buildOutDir = path.join(root, 'dist');
   let pages: PageEntry[] = [];
@@ -151,7 +157,7 @@ export function oopsiesPlugin(): Plugin {
   const refreshPages = () => {
     headMarkup = getHeadMarkup(root);
     pages = scanPages(root);
-    writeGeneratedHtml(pages, headMarkup);
+    writeGeneratedHtml(pages, headMarkup, shellTitle);
   };
 
   const watchPages = (server: ViteDevServer) => {
@@ -246,7 +252,7 @@ export function oopsiesPlugin(): Plugin {
           return;
         }
 
-        const html = await server.transformIndexHtml(pathname, buildHtmlShell(page.scriptPath, headMarkup));
+        const html = await server.transformIndexHtml(pathname, buildHtmlShell(page.scriptPath, headMarkup, shellTitle));
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
         res.end(html);

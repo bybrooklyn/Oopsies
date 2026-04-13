@@ -4,6 +4,9 @@ type Dependency = {
   subscribers: Set<Computation>;
 };
 
+let batchDepth = 0;
+const pendingComputations = new Set<Computation>();
+
 class Computation {
   deps = new Set<Dependency>();
   disposed = false;
@@ -107,8 +110,14 @@ export function signal<T>(initial: T): WritableSignal<T> {
 
     value = nextValue;
 
-    for (const computation of [...dep.subscribers]) {
-      computation.run();
+    if (batchDepth > 0) {
+      for (const computation of dep.subscribers) {
+        pendingComputations.add(computation);
+      }
+    } else {
+      for (const computation of [...dep.subscribers]) {
+        computation.run();
+      }
     }
 
     for (const listener of listeners) {
@@ -133,7 +142,7 @@ export function effect(fn: () => void): Cleanup {
 }
 
 export function computed<T>(fn: () => T): ReadableSignal<T> {
-  const state = signal(fn());
+  const state = signal<T>(undefined as unknown as T);
   const stop = effect(() => {
     state.set(fn());
   });
@@ -164,5 +173,22 @@ export function untrack<T>(fn: () => T): T {
     return fn();
   } finally {
     activeComputation = previous;
+  }
+}
+
+export function batch(fn: () => void): void {
+  batchDepth += 1;
+
+  try {
+    fn();
+  } finally {
+    batchDepth -= 1;
+
+    if (batchDepth === 0) {
+      for (const computation of [...pendingComputations]) {
+        pendingComputations.delete(computation);
+        computation.run();
+      }
+    }
   }
 }

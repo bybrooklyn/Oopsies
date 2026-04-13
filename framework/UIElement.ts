@@ -80,8 +80,37 @@ export abstract class UIElement {
     return this;
   }
 
-  onKeyDown(fn: (e: KeyboardEvent) => void): this {
-    this.el.addEventListener('keydown', fn);
+  onFocus(fn: (e: FocusEvent) => void): this {
+    this.el.addEventListener('focus', fn);
+    return this;
+  }
+
+  onBlur(fn: (e: FocusEvent) => void): this {
+    this.el.addEventListener('blur', fn);
+    return this;
+  }
+
+  onKeyUp(fn: (e: KeyboardEvent) => void): this {
+    this.el.addEventListener('keyup', fn);
+    return this;
+  }
+
+  on<K extends keyof HTMLElementEventMap>(event: K, fn: (e: HTMLElementEventMap[K]) => void): this {
+    this.el.addEventListener(event, fn as EventListener);
+    return this;
+  }
+
+  tabIndex(value: number): this {
+    this.el.tabIndex = value;
+    return this;
+  }
+
+  ariaLabel(value: string): this {
+    return this.attr('aria-label', value);
+  }
+
+  hidden(value = true): this {
+    this.el.hidden = value;
     return this;
   }
 
