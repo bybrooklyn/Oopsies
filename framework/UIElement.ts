@@ -95,6 +95,7 @@ export abstract class UIElement {
     return this;
   }
 
+  /** Attach a listener for any typed DOM event not covered by the dedicated helpers. */
   on<K extends keyof HTMLElementEventMap>(event: K, fn: (e: HTMLElementEventMap[K]) => void): this {
     this.el.addEventListener(event, fn as EventListener);
     return this;

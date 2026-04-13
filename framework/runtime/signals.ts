@@ -142,6 +142,8 @@ export function effect(fn: () => void): Cleanup {
 }
 
 export function computed<T>(fn: () => T): ReadableSignal<T> {
+  // The effect below runs immediately, so the signal is always populated before
+  // any caller can access the value. The `undefined` seed is never observable.
   const state = signal<T>(undefined as unknown as T);
   const stop = effect(() => {
     state.set(fn());
