@@ -1,8 +1,32 @@
 {
   "name": "oopsies",
   "version": "0.1.0",
+  "description": "TypeScript-first frontend framework — write structure in TS, styling in TOML, zero HTML or CSS required.",
+  "keywords": [
+    "frontend",
+    "framework",
+    "typescript",
+    "toml",
+    "vite",
+    "signals",
+    "ui",
+    "builder"
+  ],
+  "author": "Brooklyn (https://github.com/bybrooklyn)",
+  "homepage": "https://github.com/bybrooklyn/Oopsies#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bybrooklyn/Oopsies.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bybrooklyn/Oopsies/issues"
+  },
   "type": "module",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -41,10 +65,21 @@
     "preview": "vite preview --config example/vite.config.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p example/tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build:lib && npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5"
+  },
+  "peerDependencies": {
+    "vite": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@iarna/toml": "^2.2.5",
     "@types/node": "^22.10.1",
     "concurrently": "^9.1.2",
     "jsdom": "^25.0.1",
